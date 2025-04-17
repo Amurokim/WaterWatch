@@ -1,0 +1,27 @@
+<!-- html file to test the firebase real time complaints -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Real-Time Complaints</title>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+  <h1>Complaints (Real-Time)</h1>
+  <ul id="complaintsList"></ul>
+
+  <script>
+    const socket = io('http://localhost:5000');
+    const complaintsList = document.getElementById('complaintsList');
+
+    socket.on('complaintsUpdate', (data) => {
+      complaintsList.innerHTML = '';
+      data.forEach(complaint => {
+        const li = document.createElement('li');
+        li.textContent = `${complaint.name}: ${complaint.description}`;
+        complaintsList.appendChild(li);
+      });
+    });
+  </script>
+</body>
+</html>
